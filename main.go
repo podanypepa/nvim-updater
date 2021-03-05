@@ -24,8 +24,6 @@ const (
 	colorPurple = "\033[35m"
 	colorCyan   = "\033[36m"
 	colorWhite  = "\033[37m"
-
-	verURL = "https://github.com/neovim/neovim/releases"
 )
 
 var sources = map[string]string{
@@ -99,6 +97,7 @@ func installNewVersion(tarFile string) (err error) {
 }
 
 func getLatestNightBuildVer() (version string, err error) {
+	verURL := "https://github.com/neovim/neovim/releases"
 	res, err := http.Get(verURL)
 	if err != nil {
 		log.Fatal(err)
@@ -126,8 +125,7 @@ func getInstalledNvimVersion() (version string, err error) {
 	cmd := exec.Command("nvim", "--version")
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	err = cmd.Run()
-	if err != nil {
+	if err = cmd.Run(); err != nil {
 		return "", err
 	}
 
